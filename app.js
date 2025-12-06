@@ -18,7 +18,7 @@ const appTimer = () => {
     totalSeconds--;
 
     let minutesLeft = Math.floor(totalSeconds / 60);
-    let secondsleft = totalSeconds % 60;
+    let secondsLeft = totalSeconds % 60;
 
     if (secondsLeft < 10) {
       secondDiv.textContent = "0" + secondsLeft;
@@ -38,4 +38,4 @@ const appTimer = () => {
   }
 };
 
-startBtn.addEventListner("click", appTimer);
+startBtn.addEventListener("click", appTimer);
