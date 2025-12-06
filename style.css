@@ -11,6 +11,7 @@ html {
 h1 {
   margin:0 auto 10px auto;
   color: #d8e9ef;
+  text-align: center;
 }
 
 p {
@@ -28,7 +29,7 @@ p {
 
 .app-circle {
   position: relative;
-  margin: 0 auto;
+  margin: 20px auto;
   width: 200px;
   height: 200px;
 }
