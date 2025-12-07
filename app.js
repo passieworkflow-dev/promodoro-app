@@ -6,11 +6,22 @@ const minuteDiv = document.querySelector(".minutes");
 const secondDiv = document.querySelector(".seconds");
 let myInterval;
 let state = true;
-let originalSessionAmount = parseInt(session.textContent) || 25;
+let originalSessionAmount;
 let remainingSeconds;
 
+ const updateDisplay = (seconds) => {
+    let minutesLeft = Math.floor(seconds / 60);
+    let secondsLeft = seconds % 60;
+    if (secondsLeft < 10) {
+      secondDiv.textContent = "0" + secondsLeft;
+    } else {
+      secondDiv.textContent = secondsLeft;
+    }
+    minuteDiv.textContent = minutesLeft;
+ }
+
 const appTimer = () => {
-  const sessionAmount = Number.parseInt(session.textContent);
+  const sessionAmount = parseInt(session.textContent);
 
   if (isNaN(sessionAmount) || sessionAmount <= 0) {
     alert("Please reload the page");
@@ -20,30 +31,29 @@ const appTimer = () => {
   if (state) {                              //start of the timer
     state = false;
     if (!remainingSeconds) {
+      originalSessionAmount = sessionAmount;
+    }
+    if (!remainingSeconds) {
       remainingSeconds = originalSessionAmount * 60;
     }
     resetBtn.style.display = "none";    // hides reset button when started
 
+    updateDisplay(remainingSeconds);
+
+
   const updateSeconds = () => {
     remainingSeconds--;
+    updateDisplay(remainingSeconds);
 
-    let minutesLeft = Math.floor(remainingSeconds / 60);
-    let secondsLeft = remainingSeconds % 60;
 
-    if (secondsLeft < 10) {
-      secondDiv.textContent = "0" + secondsLeft;
-    } else {
-      secondDiv.textContent = secondsLeft;
-    }
-    minuteDiv.textContent = minutesLeft;
-
-    if (minutesLeft === 0 && secondsLeft === 0) {
+    if (Math.floor(remainingSeconds / 60) === 0 && remainingSeconds % 60 === 0) {
       bells.play();
       clearInterval(myInterval);
       state = true;
       startBtn.textContent = "start";
       resetBtn.style.display = "inline";
       remainingSeconds = null;
+      originalSessionAmount = Null;
     }
   };
     myInterval = setInterval(updateSeconds, 1000);
@@ -62,7 +72,7 @@ const resetTimer = () => {
   startBtn.textContent = "start";
   resetBtn.style.display = "none";
   remainingSeconds = originalSessionAmount * 60;
-  secondDiv.textContent = "00";
+  updateDisplay(remainingSeconds);
 };
 
 startBtn.addEventListener("click", appTimer);
