@@ -16,10 +16,11 @@ const appTimer = () => {
     return;
   }
   
-  if (state) {
+  if (state) {                              //start of the timer
     state = false;
     let totalSeconds = sessionAmount * 60;
-    originalSessionAmount =sessionAmount;
+    originalSessionAmount = sessionAmount;
+    resetBtn.style.display = "none";
 
   const updateSeconds = () => {
     totalSeconds--;
@@ -44,7 +45,7 @@ const appTimer = () => {
   };
     myInterval = setInterval(updateSeconds, 1000);
     startBtn.textContent = "stop";
-  } else {
+  } else {                                       //stops the timer when stop is clicked
     clearInterval(myInterval);
     state = true;
     startBtn.textContent = "start";
