@@ -6,7 +6,8 @@ const minuteDiv = document.querySelector(".minutes");
 const secondDiv = document.querySelector(".seconds");
 let myInterval;
 let state = true;
-let originalSessionAmount;
+let originalSessionAmount = parseInt(session.textContent) || 25;
+let remainingSeconds;
 
 const appTimer = () => {
   const sessionAmount = Number.parseInt(session.textContent);
@@ -18,9 +19,10 @@ const appTimer = () => {
   
   if (state) {                              //start of the timer
     state = false;
-    let totalSeconds = sessionAmount * 60;
-    originalSessionAmount = sessionAmount;
-    resetBtn.style.display = "none";
+    if (!remainingSeconds) {
+      remainingSeconds = originalSessionAmount * 60;
+    }
+    resetBtn.style.display = "none";    // hides reset button when started
 
   const updateSeconds = () => {
     totalSeconds--;
@@ -40,7 +42,8 @@ const appTimer = () => {
       clearInterval(myInterval);
       state = true;
       startBtn.textContent = "start";
-      resetBtn.style.display = "inline";      
+      resetBtn.style.display = "inline";
+      remainingSeconds = null;
     }
   };
     myInterval = setInterval(updateSeconds, 1000);
@@ -58,7 +61,7 @@ const resetTimer = () => {
   state = true;
   startBtn.textContent = "start";
   resetBtn.style.display = "none";
-  minuteDiv.textContent = originalSessionAmount || 0;
+  remainingSeconds = originalSessionAmount * 60;
   secondDiv.textContent = "00";
 };
 
