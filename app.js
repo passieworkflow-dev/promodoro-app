@@ -25,10 +25,10 @@ const appTimer = () => {
     resetBtn.style.display = "none";    // hides reset button when started
 
   const updateSeconds = () => {
-    totalSeconds--;
+    remainingSeconds--;
 
-    let minutesLeft = Math.floor(totalSeconds / 60);
-    let secondsLeft = totalSeconds % 60;
+    let minutesLeft = Math.floor(remainingSeconds / 60);
+    let secondsLeft = remainingSeconds % 60;
 
     if (secondsLeft < 10) {
       secondDiv.textContent = "0" + secondsLeft;
